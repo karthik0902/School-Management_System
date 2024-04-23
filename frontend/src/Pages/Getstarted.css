@@ -1,0 +1,24 @@
+
+
+.get-started-page {
+
+    margin: 0 auto;
+    color: rgb(35, 165, 208);
+    
+    text-align: center;
+}
+
+
+.button-container {
+    margin-top: 20px;
+    margin-left: 35%;
+    display: flex;
+}
+.img1{
+    width: 100%;
+    
+}
+
+
+
+
