@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import {AdminPost} from "../../api"
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
+import TextField from '@mui/material/TextField';
 
 
-// Staff management component
-const StaffManagement = () => {
-    const { code,setCode} = useContext(UserContext);
 
-  const [staff, setStaff] = useState([]);
+const StaffManagement = ({obj}) => {
+    const { code,setCode,Admintoken} = useContext(UserContext);
+    const token =localStorage.getItem('token')
+
   const [newStaffMember, setNewStaffMember] = useState({
     name: '',
     role: '',
@@ -25,52 +26,52 @@ const StaffManagement = () => {
   };
 
   const addStaffMember = async () => {
-    setStaff([...staff, newStaffMember]);
+    
     setNewStaffMember({ name: '', role: '' ,empid:''});
     console.log(newStaffMember);
-    const response= await AdminPost(code,newStaffMember)
+    const response= await AdminPost(code,newStaffMember,Admintoken)
     console.log(response);
 
   };
 
+
   return (
-    <div style={{margin:"20px"}}>
+    <div>
+    <div style={{margin:"20px",marginLeft:'2%',marginRight:'75%',backgroundColor:'white',padding:'30px',borderRadius:'20px'}}>
       <h2>Staff Management</h2>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
+      <TextField id="standard-basic" style={{margin:"10px"}} label="Name:" variant="standard" type="text"
           name="name"
           value={newStaffMember.name}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>EMP ID:</label>
-        <input
-          type="text"
+          onChange={handleInputChange} /><br/>
+      <TextField id="standard-basic" style={{margin:"10px"}} label="EMP ID:" variant="standard" type="text"
           name="empid"
           value={newStaffMember.empid}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Role:</label>
-        <input
-          type="text"
+          onChange={handleInputChange} /><br/>
+      <TextField id="standard-basic" style={{margin:"10px"}} label="Role:" variant="standard"  type="text"
           name="role"
           value={newStaffMember.role}
-          onChange={handleInputChange}
-        />
+          onChange={handleInputChange}/><br/>
+   
+      <button style={{margin:"15px"}} onClick={addStaffMember}>Add Staff Member</button>
       </div>
-      <button onClick={addStaffMember}>Add Staff Member</button>
-      <ul>
-        {staff.map((staffMember, index) => (
-          <li key={index}>
-            <strong>{staffMember.name}</strong> - {staffMember.role}
-          </li>
-        ))}
-      </ul>
+      <div style={{display:'flex',backgroundColor:'white',borderRadius:'15px',flexWrap:'wrap'}}>
+      {obj&&
+          obj.map((obj)=>{
+            return <div  style={{margin:"15px",marginLeft:"15px" ,display:'flex'}} >
+                <p>
+                Emp ID  :      {obj.empid}<br/>
+                name:    {obj.name}<br/>
+                Role: {obj.role}<br/>
+      
+                </p>
+                
+                
+                </div>
+          })
+          
+        }
+      
+      </div>
     </div>
   );
 };

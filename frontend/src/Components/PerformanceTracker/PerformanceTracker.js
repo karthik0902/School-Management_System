@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {PerformancePost} from "../../api"
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
+import TextField from '@mui/material/TextField';
+
 
 
 
@@ -26,16 +28,17 @@ const PerformanceTracker = () => {
     };
   
     return (
-      <div>
+      <div style={{margin:"20px",marginLeft:'2%',marginRight:'75%',backgroundColor:'white',padding:'30px',borderRadius:'20px'}}>
         <h2>Performance Tracker</h2>
-        <input type='text' placeholder='id' onChange={(e)=>setId(e.target.value)} ></input>
-        <input type='text' placeholder='sub'  onChange={(e)=>setsub(e.target.value)} ></input>
-        <input type='text' placeholder='grade'  onChange={(e)=>setGrade(e.target.value)} ></input>
-        <input type='text' placeholder='attendence'  onChange={(e)=>setAttendence(e.target.value)} ></input>
+        <TextField style={{margin:"10px"}}  id="standard-basic" label="Student ID:" variant="standard" onChange={(e)=>setId(e.target.value)} type='text' /><br/>
+        <TextField style={{margin:"10px"}}  id="standard-basic" label="Subject" variant="standard" onChange={(e)=>setsub(e.target.value)} type='text' /><br/>
+        <TextField style={{margin:"10px"}}  id="standard-basic" label="Grade :" variant="standard" onChange={(e)=>setGrade(e.target.value)} type='text' /><br/>
+        <TextField style={{margin:"10px"}}  id="standard-basic" label="Attendence" variant="standard" onChange={(e)=>setAttendence(e.target.value)} type='text' /><br/>
 
 
 
-        <button onClick={() => addGrade()}>Add</button>
+
+        <button style={{margin:"20px"}} onClick={() => addGrade()}>Add</button>
        
       </div>
     );

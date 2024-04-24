@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {AdminStudentPost} from "../../api"
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
+import TextField from '@mui/material/TextField';
 
 
 // Fee management component
-const FeeManagement = () => {
-  const { code,setCode} = useContext(UserContext);
+const FeeManagement = ({obj}) => {
+  const { code,setCode,Admintoken} = useContext(UserContext);
 
   const [fees, setFees] = useState([]);
   const [newFee, setNewFee] = useState({
@@ -27,44 +28,53 @@ const FeeManagement = () => {
     setFees([...fees, newFee]);
     setNewFee({ studentId: '', fee: '' ,payment:''});
     console.log(newFee);
-    const response= await AdminStudentPost(code,newFee)
+    const response= await AdminStudentPost(code,newFee,Admintoken)
     console.log(response);
   };
 
 
 
   return (
-    <div style={{margin:"20px"}}>
+    <div>
+    <div style={{margin:"20px",marginLeft:'2%',marginRight:'75%',backgroundColor:'white',padding:'30px',borderRadius:'20px'}}>
       <h2>Add student</h2>
-      <div>
-        <label>Student Id:</label>
-        <input
-          type="text"
+      <TextField id="standard-basic" style={{margin:"15px"}}label="Student Id:" variant="standard" type="text"
           name="studentId"
           value={newFee.studentId}
-          onChange={handleInputChange}
-        />
-      </div>
-     
-      <div>
-        <label>Amount:</label>
-        <input
-          type="number"
+          onChange={handleInputChange}/><br/>
+      <TextField id="standard-basic" style={{margin:"15px"}} label="Amount:" variant="standard" type="number"
           name="fee"
           value={newFee.fee}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Payment status:</label>
-        <input
-          type="text"
+          onChange={handleInputChange} /><br/>
+      <TextField id="standard-basic"style={{margin:"15px"}} label="Payment status:" variant="standard" type="text"
           name="payment"
           value={newFee.payment}
-          onChange={handleInputChange}
-        />
+          onChange={handleInputChange}/><br/>
+
+      
+      
+      <button style={{margin:"25px"}} onClick={addFee}>Add Student</button>
       </div>
-      <button onClick={addFee}>Add Student</button>
+
+
+      <div style={{display:'flex',backgroundColor:'white',borderRadius:'15px',flexWrap:'wrap'}}>
+      {obj&&
+          obj.map((obj)=>{
+            return <div  style={{margin:"15px",marginLeft:"15px" ,display:'flex'}} >
+                <p>
+                Student Id  :      {obj.studentId}<br/>
+                Amount:    {obj.fee}<br/>
+                Payment status: {obj.payment}<br/>
+      
+                </p>
+                
+                
+                </div>
+          })
+          
+        }
+      
+      </div>
      
     </div>
   );

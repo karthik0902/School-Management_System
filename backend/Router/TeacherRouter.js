@@ -127,6 +127,19 @@ TeacherRouter.post('/signup', async (req, res) => {
         }
     });
 
+
+
+    TeacherRouter.get("/",async (req,res)=>{
+        try{
+        let studentsList = await TeacherModel.find();
+        res.json(studentsList);
+        }
+        catch (error) {
+            console.error('Error fetching students:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     function loggingMiddleware(req, res, next) { 
         console.log("Inside Middleware");
         try {

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
 import {teacherSyllabusPost} from "../../api"
+import TextField from '@mui/material/TextField';
+
 
 
 // Schedule component
-const Syllabus = () => {
+const Syllabus = ({obj}) => {
     const { empid,setEmpid,teachertoken} = useContext(UserContext);
 
 
@@ -21,12 +23,35 @@ const Syllabus = () => {
 
   return (
     <div>
+    <div style={{margin:"20px",marginLeft:'2%',marginRight:'75%',backgroundColor:'white',padding:'30px',borderRadius:'20px'}}>
       <h2>Syllabus</h2>
-      <input type='text' placeholder='subject' onChange={(e)=>setSub(e.target.value)}></input>
-      <input type='text' placeholder='Syllabus' onChange={(e)=>setSyllabus(e.target.value)}></input>
+      <TextField style={{margin:"10px"}}  id="standard-basic" label="Subject" variant="standard" onChange={(e)=>setSub(e.target.value)} type='text' /><br/>
+      <TextField style={{margin:"10px"}}  id="standard-basic"label="Syllabus"  variant="standard" onChange={(e)=>setSyllabus(e.target.value)} type='text' /><br/>
 
-      <button onClick={() => postSyllabus()}>Add</button>
       
+
+      <button style={{margin:"20px"}}  onClick={() => postSyllabus()}>Add</button>
+      
+    </div>
+    <h4>Syllabus </h4>
+    <div style={{display:'flex',backgroundColor:'white',borderRadius:'15px',flexWrap:'wrap'}}>
+      
+      {obj&&
+          obj.map((obj)=>{
+            return <div  style={{margin:"15px",marginLeft:"15px" ,display:'flex'}} >
+                <p>
+                Subject :      {obj.sub}<br/>
+                Syllabus:    {obj.Syllabus}<br/>
+      
+                </p>
+                
+                
+                </div>
+          })
+          
+        }
+      
+      </div>
     </div>
   );
 };

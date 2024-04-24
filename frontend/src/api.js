@@ -76,9 +76,13 @@ export const teacherLogin = async (data) => {
     }
   };
 
-  export const AdminPost = async (code,data) => {
+  export const AdminPost = async (code,data,token) => {
     try {
-      const response = await axios.post(`${baseURL}/AdminUsers/staff/${code}`,data);
+      const response = await axios.post(`${baseURL}/AdminUsers/staff/${code}`,data,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -86,9 +90,13 @@ export const teacherLogin = async (data) => {
   };
 
 
-  export const AdminStudentPost = async (code,data) => {
+  export const AdminStudentPost = async (code,data,token) => {
     try {
-      const response = await axios.post(`${baseURL}/AdminUsers/student/${code}`,data);
+      const response = await axios.post(`${baseURL}/AdminUsers/student/${code}`,data,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -135,35 +143,79 @@ export const teacherLogin = async (data) => {
     }
   };
 
-  export const GetSchedule = async () => {
+  export const GetSchedule = async (token) => {
     try {
-      const response = await axios.get(`${baseURL}/StudentUsers/Schedule`,);
+      const response = await axios.get(`${baseURL}/StudentUsers/Schedule`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response;
     } catch (error) {
       throw error;
     }
   };
-  export const GetSyllabus = async () => {
+  export const GetSyllabus = async (token) => {
     try {
-      const response = await axios.get(`${baseURL}/StudentUsers/Syllabus`,);
+      const response = await axios.get(`${baseURL}/StudentUsers/Syllabus`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response;
     } catch (error) {
       throw error;
     }
   };
 
-  export const GetSutentlist = async () => {
+  export const GetSutentlist = async (id,token) => {
     try {
-      const response = await axios.get(`${baseURL}/StudentUsers/studentlist`,);
+      const response = await axios.get(`${baseURL}/StudentUsers/studentlist/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response.data;
     } catch (error) {
       throw error;
     }
   };
 
-  export const GetData = async () => {
+  export const GetAdminData = async (token) => {
     try {
-      const response = await axios.get(`${baseURL}/AdminUsers/`,);
+      const response = await axios.get(`${baseURL}/AdminUsers/`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+
+  export const GetAmount = async (token) => {
+    try {
+      const response = await axios.get(`${baseURL}/AdminUsers/amount`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const GetTeachersData = async (token) => {
+    try {
+      const response = await axios.get(`${baseURL}/TeacherUsers/`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
       return response;
     } catch (error) {
       throw error;

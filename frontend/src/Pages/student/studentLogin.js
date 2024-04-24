@@ -14,33 +14,46 @@ import TextField from '@mui/material/TextField';
 
 const StudentAuthPage = () => {
     const { login,setlogin} = useContext(UserContext);
-    const [loginFormData, setLoginFormData] = useState({ UserName: '', password: '' });
-    const [signupFormData, setSignupFormData] = useState({  UserName: '', password: '' });
-    const nav = useNavigate();
-    const handleLoginChange = (e) => {
-        setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
-    };
+    const [email,setEmail]=useState('')
+    const [email1,setEmail1]=useState('')
+    const [password,setPassword]=useState('')
+    const [password1,setPassword1]=useState('')
+    const [loginError, setLoginError] = useState('');
+    const [signupError, setSignupError] = useState('');
 
-    const handleSignupChange = (e) => {
-        setSignupFormData({ ...signupFormData, [e.target.name]: e.target.value });
-    };
+  
+    const nav = useNavigate();
+   
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
-     
-        const response = await studentLogin(loginFormData);
-        console.log(response)
+        try {
+            const response = await studentLogin({ UserName: email , password: password });
+
+      
         setlogin(true)
+  
         nav('/studenthome')
+        } catch (error) {
+            setLoginError(error.response.data);
+        }
+     
+       
     };
 
     const handleSignupSubmit = async(e) => {
         e.preventDefault();
+        try {
+            const response = await studentSignup({ UserName: email1 , password: password1 });
+      
+            setlogin(true)
+            nav('/studenthome')
+        } catch (error) {
+            setSignupError(error.response.data);
+        }
+      
      
-        const response = await studentSignup(signupFormData);
-        console.log(response)
-        setlogin(true)
-        nav('/studenthome')
+       
     };
 
     return (
@@ -48,18 +61,23 @@ const StudentAuthPage = () => {
             <div className="login-container">
                 <h2>Login</h2>
                 <form onSubmit={handleLoginSubmit}>
-                    <TextField id="standard-basic" style={{margin:"10px"}} label="Email" variant="standard" type="text" name="UserName"  value={loginFormData.UserName} onChange={handleLoginChange} required/>
-                    <TextField id="standard-basic" style={{margin:"10px"}} label="Password" variant="standard" type="password" name="password" value={loginFormData.password} onChange={handleLoginChange} required />
+                    <TextField id="standard-basic" style={{margin:"10px"}} label="Email" variant="standard" type="text" onChange={(e)=>setEmail(e.target.value)}  required/>
+                    <TextField id="standard-basic" style={{margin:"10px"}} label="Password" variant="standard" type="password" onChange={(e)=>setPassword(e.target.value)}  required />
 
                     <button style={{margin:"15px"}} type="submit">Login</button>
+                    {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+
                 </form>
             </div>
             <div className="signup-container">
                 <h2>Sign Up</h2>
                 <form onSubmit={handleSignupSubmit}>
-                    <input type="text" name="UserName" placeholder="Email" value={signupFormData.UserName} onChange={handleSignupChange} required />
-                    <input type="password" name="password" placeholder="Password" value={signupFormData.password} onChange={handleSignupChange} required />
-                    <button type="submit">Sign Up</button>
+                <TextField id="standard-basic" style={{margin:"10px"}} label="Email" variant="standard" onChange={(e)=>setEmail1(e.target.value)} placeholder="Email" required/>
+                <TextField id="standard-basic" style={{margin:"10px"}} label="Password" variant="standard"  onChange={(e)=>setPassword1(e.target.value)} placeholder="Email"  required/>
+
+                    <button style={{margin:"15px"}} type="submit">Sign Up</button>
+                    {signupError && <p style={{ color: 'red' }}>{signupError}</p>}
+
                 </form>
             </div>
         </div>

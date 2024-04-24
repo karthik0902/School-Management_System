@@ -54,6 +54,21 @@ registerRouter.post('/signup', async (req, res) => {
             
             res.status(500).send(error); } 
     });
+    registerRouter.get('/Syllabus',async(req,res)=>{
+        try{
+            const teachersList = await teachersModel.find();
+            const scheduleList = teachersList.map(teacher => teacher.Syllabus);
+            res.json(scheduleList);
+            }
+            catch (error) {
+                console.error('Error fetching students:', error);
+                res.status(500).json({ error: 'Internal server error' });
+            }
+
+    })
+
+
+    registerRouter.use(loggingMiddleware)
 
 
     
@@ -69,26 +84,18 @@ registerRouter.post('/signup', async (req, res) => {
             }
 
     })
-    registerRouter.get('/Syllabus',async(req,res)=>{
+    
+
+
+
+    registerRouter.get('/studentlist/:id',async(req,res)=>{
         try{
-            const teachersList = await teachersModel.find();
-            const scheduleList = teachersList.map(teacher => teacher.Syllabus);
-            res.json(scheduleList);
-            }
-            catch (error) {
-                console.error('Error fetching students:', error);
-                res.status(500).json({ error: 'Internal server error' });
-            }
-
-    })
-
-
-
-    registerRouter.get('/studentlist',async(req,res)=>{
-        try{
+            const id = req.params.id
             const teachersList = await teachersModel.find();
             const scheduleList = teachersList.map(teacher => teacher.student);
-            res.json(scheduleList);
+            const flatData = scheduleList.flat();
+            const studentData = flatData.filter(item => item.studentId === id);
+            res.json(studentData);
             }
             catch (error) {
                 console.error('Error fetching students:', error);
@@ -96,6 +103,33 @@ registerRouter.post('/signup', async (req, res) => {
             }
 
     })
+
+
+    function loggingMiddleware(req, res, next) { 
+
+        try {
+            
+            const token = req.headers.authorization ? req.headers.authorization.split(' ')[1]:null;
+            if (!token) {
+                return res.status(401).send('Authentication token failed!');
+            }
+            const decodedToken = jwt.verify(token, secretKey);
+            console.log("Authentication Success");
+            if(decodedToken){
+                res.send("Authentication Success")
+                next(); 
+
+            }else{
+                console.log(err+'Authentication failed!', 401); 
+            }
+            
+        } catch (err) {
+            console.log(err+'Authentication failed!', 401); 
+            next();
+           
+            
+        }
+    }
 
     
 

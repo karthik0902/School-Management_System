@@ -35,7 +35,7 @@ AdminRouter.post('/signup', async (req, res) => {
    
         const student = await AdminModel.findOne({email:req.body.email}); //http://localhost:3002/student/login
         if (!student) {
-        return res.status(404).send('Student not found');
+        return res.status(404).json({ error: 'Student not found' });
         }
         try {
             const passwordMatch = await bcrypt.compare( req.body.password,student.password);
@@ -47,12 +47,15 @@ AdminRouter.post('/signup', async (req, res) => {
             }
             
             else{
-                res.status(401).send('Incorrect password');
+                res.json({ error: 'Incorrect password' });
             }
             } catch (error) {
             
-            res.status(500).send(error); } 
+            res.status(500).json({ error: 'Internal server error' }); } 
     });
+
+    AdminRouter.use(loggingMiddleware)
+
 
 
     AdminRouter.post("/staff/:code",async (req,res)=>{
@@ -109,6 +112,51 @@ AdminRouter.post('/signup', async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
+
+    AdminRouter.get('/amount',async(req,res)=>{
+        try{
+            const amount = await AdminModel.find();
+            const scheduleList = amount.map(teacher => teacher.students);
+            const flatData = scheduleList.flat();
+            const totalAmount = flatData.reduce((total, current) => total + current.fee, 0);
+            res.json(totalAmount);
+            }
+            catch (error) {
+                console.error('Error fetching students:', error);
+                res.status(500).json({ error: 'Internal server error' });
+            }
+
+    })
+
+
+
+
+    function loggingMiddleware(req, res, next) { 
+        console.log("Inside Middleware");
+        try {
+            
+            const token = req.headers.authorization ? req.headers.authorization.split(' ')[1]:null;
+        
+            if (!token) {
+                return res.status(401).send('Authentication token failed!');
+            }
+            const decodedToken = jwt.verify(token, secretKey);
+            
+            console.log("outside");
+            if(decodedToken){
+                next(); 
+
+            }else{
+                console.log(err+'Authentication failed!', 401); 
+            }
+            
+        } catch (err) {
+            console.log(err+' Authentication failed!', 401); 
+            next();
+           
+            
+        }
+    }
 
 
 
