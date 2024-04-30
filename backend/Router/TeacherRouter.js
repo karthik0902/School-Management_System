@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const TeacherRouter = express.Router();
 const TeacherModel =require("../models/teachersModel")
+const adminModel =require("../models/adminModel")
 const { secretKey } = require('../config/config');
 
 
@@ -11,39 +12,67 @@ const { secretKey } = require('../config/config');
 
 
 TeacherRouter.post('/signup', async (req, res) => {
-    const student = await TeacherModel.findOne({empid:req.body.empid}); //http://localhost:3002/student/signup
+    const Teacher = await TeacherModel.findOne({empid:req.body.empid}); //http://localhost:3002/Teacher/signup
+    const admin = await adminModel.findOne({ School_code: req.body.School_code });
+    
 
-    if(student){
-        return res.status(404).send('Student registered already');
+   if(admin){
+    const teacher = admin.teachers.find(teacher => teacher.empid === req.body.empid);
+    if(teacher){
+
+
+    if(Teacher){
+        return res.status(400).send('Teacher registered already');
     }
     else{
     try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10); 
-    const student = TeacherModel({ empid: req.body.empid, password: hashedPassword }); 
-    student.save();
-    const token = jwt.sign({empid :student.empid}, secretKey, { expiresIn: '1h' });
-    res.status(200).json({ token,student });
+    const Teacher = TeacherModel({ empid: req.body.empid, password: hashedPassword ,School_code:req.body.School_code}); 
+    await Teacher.save();
+    const token = jwt.sign({empid :Teacher.empid}, secretKey, { expiresIn: '1h' });
+    Teacher.password= null;
+
+    res.status(200).json({ token,Teacher });
 
     } catch (error) {
 
-    console.error('Error registering student:', error); res.status(500).send('Internal Server Error');
-    } }});
+    console.error('Error registering Teacher:', error); res.status(500).send('Internal Server Error');
+    }
+}
+
+}
+else{
+    res.status(401).send('Empid is not Registered by admin');
+
+}
+   }
+else{
+    res.status(401).send('School code not found ');
+  }
+
+}
+);
 
 
 
     TeacherRouter.post('/login', async (req, res) => {
    
         const student = await TeacherModel.findOne({empid:req.body.empid}); //http://localhost:3002/student/login
+        const admin = await adminModel.findOne({ School_code: req.body.School_code });
+        if(admin){
+        const teacher = admin.teachers.find(teacher => teacher.empid === req.body.empid);
+
+
+      if(teacher){
         if (!student) {
-        return res.status(404).send('Student not found');
+        return res.status(404).send('Empid is not Registered');
         }
         try {
             const passwordMatch = await bcrypt.compare( req.body.password,student.password);
 
             if (passwordMatch) {
                 const token = jwt.sign({empid :student.empid}, secretKey, { expiresIn: '1h' });
-               
-
+                student.password= null;
             res.status(200).json({ token,student });
             }
             
@@ -53,6 +82,18 @@ TeacherRouter.post('/signup', async (req, res) => {
             } catch (error) {
             
             res.status(500).send(error); } 
+
+      }
+      else{
+        res.status(401).send('Empid is not Registered by admin');
+
+
+      }
+    }
+    else{
+        res.status(401).send('School code not found ');
+
+    }
     });
 
 
@@ -129,10 +170,11 @@ TeacherRouter.post('/signup', async (req, res) => {
 
 
 
-    TeacherRouter.get("/",async (req,res)=>{
+    TeacherRouter.get("/data/:empid",async (req,res)=>{
         try{
-        let studentsList = await TeacherModel.find();
-        res.json(studentsList);
+            let empid = req.params.empid
+        let teacherdata = await TeacherModel.findOne({empid:empid});
+        res.json(teacherdata);
         }
         catch (error) {
             console.error('Error fetching students:', error);
@@ -141,7 +183,6 @@ TeacherRouter.post('/signup', async (req, res) => {
     });
 
     function loggingMiddleware(req, res, next) { 
-        console.log("Inside Middleware");
         try {
             
             const token = req.headers.authorization ? req.headers.authorization.split(' ')[1]:null;
@@ -149,8 +190,9 @@ TeacherRouter.post('/signup', async (req, res) => {
                 return res.status(401).send('Authentication token failed!');
             }
             const decodedToken = jwt.verify(token, secretKey);
-            console.log("outside");
             if(decodedToken){
+                console.log('Teacher Authentication Sucess!'); 
+
                 next(); 
 
             }else{

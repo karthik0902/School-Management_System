@@ -14,7 +14,7 @@ AdminRouter.post('/signup', async (req, res) => {
     const student = await AdminModel.findOne({email:req.body.email}); //http://localhost:3002/student/signup
 
     if(student){
-        return res.status(404).send('Student registered already');
+        return res.status(404).send('Admin registered already');
     }
     else{
     try {
@@ -67,7 +67,7 @@ AdminRouter.post('/signup', async (req, res) => {
         if (adminUser) {
             adminUser.teachers.push({ empid, name, role });
             await adminUser.save();
-            res.json(adminUser);
+            res.status(200).send("Sucess");
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -89,7 +89,7 @@ AdminRouter.post('/signup', async (req, res) => {
         if (adminUser) {
             adminUser.students.push({ studentId, fee, payment });
             await adminUser.save();
-            res.json(adminUser);
+            res.status(200).send("Sucess");
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -102,10 +102,13 @@ AdminRouter.post('/signup', async (req, res) => {
     });
 
 
-    AdminRouter.get("/",async (req,res)=>{
+    AdminRouter.get("/alldata/:code",async (req,res)=>{
         try{
-        let studentsList = await AdminModel.find();
-        res.json(studentsList);
+            let code = req.params.code;
+            const adminUser = await AdminModel.findOne({ School_code: code });
+
+
+        res.json(adminUser);
         }
         catch (error) {
             console.error('Error fetching students:', error);
@@ -132,7 +135,6 @@ AdminRouter.post('/signup', async (req, res) => {
 
 
     function loggingMiddleware(req, res, next) { 
-        console.log("Inside Middleware");
         try {
             
             const token = req.headers.authorization ? req.headers.authorization.split(' ')[1]:null;
@@ -142,8 +144,9 @@ AdminRouter.post('/signup', async (req, res) => {
             }
             const decodedToken = jwt.verify(token, secretKey);
             
-            console.log("outside");
             if(decodedToken){
+                console.log('Authentication Sucess!'); 
+
                 next(); 
 
             }else{

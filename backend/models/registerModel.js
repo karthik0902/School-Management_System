@@ -2,6 +2,7 @@ const mongoose=require("../config/mongoose")
 const userSchema =new mongoose.Schema({
     UserName: String,
     password: String, 
+    School_code:String,
    
    
  });

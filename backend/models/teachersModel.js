@@ -23,6 +23,7 @@ const ScheduleSchema =new mongoose.Schema({
 const userSchema =new mongoose.Schema({
     empid: String,
     password: String, 
+    School_code:String,
     Syllabus:[SyllabusSchema],
     Schedule:[ScheduleSchema],
     student:[SudentSchema],

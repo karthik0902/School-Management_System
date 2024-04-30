@@ -3,12 +3,17 @@ import {AdminPost} from "../../api"
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
 import TextField from '@mui/material/TextField';
+import EnhancedTable from './StaffList';
 
 
 
 const StaffManagement = ({obj}) => {
     const { code,setCode,Admintoken} = useContext(UserContext);
     const token =localStorage.getItem('token')
+    const [error,seterror]=useState(null)
+    const [res,setres]=useState(null)
+
+
 
   const [newStaffMember, setNewStaffMember] = useState({
     name: '',
@@ -28,16 +33,26 @@ const StaffManagement = ({obj}) => {
   const addStaffMember = async () => {
     
     setNewStaffMember({ name: '', role: '' ,empid:''});
-    console.log(newStaffMember);
-    const response= await AdminPost(code,newStaffMember,Admintoken)
+    const logincode= localStorage.getItem('logincode')//AdminToken
+    const AdminToken= localStorage.getItem('AdminToken')//AdminToken
+
+    try{
+    const response= await AdminPost(logincode,newStaffMember,AdminToken)
     console.log(response);
+    setres(response)
+
+    }catch(error){
+      seterror(error)
+      
+      console.log(error);
+    }
 
   };
 
 
   return (
-    <div>
-    <div style={{margin:"20px",marginLeft:'2%',marginRight:'75%',backgroundColor:'white',padding:'30px',borderRadius:'20px'}}>
+    <div style={{marginTop:'40px'}}>
+    <div style={{margin:"20px",marginLeft:'2%',marginRight:'70%',backgroundColor:'lightblue',padding:'30px',borderRadius:'20px'}}>
       <h2>Staff Management</h2>
       <TextField id="standard-basic" style={{margin:"10px"}} label="Name:" variant="standard" type="text"
           name="name"
@@ -53,23 +68,14 @@ const StaffManagement = ({obj}) => {
           onChange={handleInputChange}/><br/>
    
       <button style={{margin:"15px"}} onClick={addStaffMember}>Add Staff Member</button>
+      {res?<p  style={{ color: 'red',marginLeft:"55px" }}>{res}</p>:null}
+
+      {error?<p>{error}</p>:null}
       </div>
-      <div style={{display:'flex',backgroundColor:'white',borderRadius:'15px',flexWrap:'wrap'}}>
-      {obj&&
-          obj.map((obj)=>{
-            return <div  style={{margin:"15px",marginLeft:"15px" ,display:'flex'}} >
-                <p>
-                Emp ID  :      {obj.empid}<br/>
-                name:    {obj.name}<br/>
-                Role: {obj.role}<br/>
-      
-                </p>
-                
-                
-                </div>
-          })
-          
-        }
+      <h4>STAFF LIST</h4>
+      <div style={{display:'flex',backgroundColor:'lightblue',borderRadius:'15px',flexWrap:'wrap'}}>
+        <EnhancedTable obj={obj}/>
+     
       
       </div>
     </div>

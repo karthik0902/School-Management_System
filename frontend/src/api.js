@@ -143,9 +143,9 @@ export const teacherLogin = async (data) => {
     }
   };
 
-  export const GetSchedule = async (token) => {
+  export const GetSchedule = async (token,code) => {
     try {
-      const response = await axios.get(`${baseURL}/StudentUsers/Schedule`,{
+      const response = await axios.get(`${baseURL}/StudentUsers/Schedule/${code}`,{
         headers: {
           Authorization: `Bearer ${token}` 
         }
@@ -155,9 +155,9 @@ export const teacherLogin = async (data) => {
       throw error;
     }
   };
-  export const GetSyllabus = async (token) => {
+  export const GetSyllabus = async (token,code) => {
     try {
-      const response = await axios.get(`${baseURL}/StudentUsers/Syllabus`,{
+      const response = await axios.get(`${baseURL}/StudentUsers/Syllabus/${code}`,{
         headers: {
           Authorization: `Bearer ${token}` 
         }
@@ -181,9 +181,9 @@ export const teacherLogin = async (data) => {
     }
   };
 
-  export const GetAdminData = async (token) => {
+  export const GetAdminData = async (token,logincode) => {
     try {
-      const response = await axios.get(`${baseURL}/AdminUsers/`,{
+      const response = await axios.get(`${baseURL}/AdminUsers/alldata/${logincode}`,{
         headers: {
           Authorization: `Bearer ${token}` 
         }
@@ -209,14 +209,27 @@ export const teacherLogin = async (data) => {
     }
   };
 
-  export const GetTeachersData = async (token) => {
+  export const GetTeachersData = async (empid,token) => {
     try {
-      const response = await axios.get(`${baseURL}/TeacherUsers/`,{
+      const response = await axios.get(`${baseURL}/TeacherUsers/data/${empid}`,{
         headers: {
           Authorization: `Bearer ${token}` 
         }
       });
       return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const GetSutentlist1 = async (id,token) => {
+    try {
+      const response = await axios.get(`${baseURL}/ParentUsers/studentlist/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
     } catch (error) {
       throw error;
     }

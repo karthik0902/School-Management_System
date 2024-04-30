@@ -17,10 +17,6 @@ import ParentHomePage from './Pages/parents/ParentHome';
 
 
 function App() {
-  let [login,setlogin]=useState(false)
-  let [tlogin,setteacherslogin]=useState(false)
-  let [plogin,setParentslogin]=useState(false)
-  let [Alogin,setAdminlogin]=useState(false)
   let [code,setCode]=useState()
   let [empid,setEmpid]=useState()
   const [teachertoken,setToken]=useState()
@@ -42,14 +38,7 @@ function App() {
 
   const nav = useNavigate();
   const back=()=>{
-    
-
-    nav('/')
-    setlogin(false)
-
-    setteacherslogin(false)
-    setParentslogin(false)
-    setAdminlogin(false)
+    nav('/')  
 
   }
 
@@ -58,30 +47,34 @@ function App() {
     
 
     nav('/choose')
-    setlogin(false)
 
-    setteacherslogin(false)
-    setParentslogin(false)
-    setAdminlogin(false)
- 
-
+    localStorage.setItem("studentlogin",false)
+    localStorage.setItem("adminlogin",false)
+    localStorage.setItem("teacherlogin",false)
+    localStorage.setItem("parentlogin",false)
   }
 
  
+const studentlogin=localStorage.getItem("studentlogin")    
+const adminlogin=localStorage.getItem("adminlogin")   
+const teacherlogin=localStorage.getItem("teacherlogin")   
+const parentlogin=localStorage.getItem("parentlogin")   
+
+
 
 
   const renderRoutes = () => {
-    if (login) {
+    if (studentlogin === "true") {
       return <Route path='/studenthome' element={<StudentHomePage />} />;
     } 
-    if (tlogin) {
+    if (teacherlogin === "true") {
       return <Route path='/teacherhome' element={<TeachersHomePage />} />;
     } 
     
-     if (Alogin) {
+     if (adminlogin === "true") {
       return <Route path='/adminhome' element={<AdminHomePage />} />;
     }
-     if (plogin) {
+     if (parentlogin === "true") {
       return <Route path='/home' element={<ParentHomePage />} />;
     } 
   };
@@ -91,8 +84,8 @@ function App() {
 
   return (
     <div>
-      <UserContext.Provider value={{ login,setlogin,setteacherslogin,setAdminlogin,code,setCode ,empid,setEmpid,teachertoken,setToken,plogin,setParentslogin,
-      Admintoken,setAdminToken,studenttoken,setstudentToken,parenttoken,setparentToken}}>
+      <UserContext.Provider value={{ code,setCode ,empid,setEmpid,teachertoken,setToken,
+      Admintoken,setAdminToken,studenttoken,setstudentToken,parenttoken,setparentToken,logout}}>
   
         <Routes>
           <Route path="/" element={<GetStartedPage />} />
@@ -109,9 +102,7 @@ function App() {
 
           {renderRoutes()}
         </Routes>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <button style={{ margin: '1%' ,marginTop:'20px'}} onClick={logout}>Logout</button>
-    <button style={{ margin: '1%',marginTop:'20px' }} onClick={back}>Back</button></div>
+       
 
       </UserContext.Provider>
     </div>
