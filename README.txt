@@ -27,6 +27,7 @@ password: karthik
 
 NOTE:
 
-New registrations for both students and teachers cannot be created. untill, administrators required to manually input student and teacher IDs through the admin page.
+
+New registrations for both students and teachers cannot be created until administrators manually input student and teacher IDs through the admin page.
 
 /////////////////////////
