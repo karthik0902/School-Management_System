@@ -41,7 +41,7 @@ const AdminHomePage = () => {
         };
 
         fetchData();
-    }, [AdminToken]);
+    }, [AdminToken,logincode]);
    
 
   

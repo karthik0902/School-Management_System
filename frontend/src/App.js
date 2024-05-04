@@ -14,6 +14,7 @@ import AdminAuthPage from './Pages/Admin/AdminLogin';
 import AdminHomePage from './Pages/Admin/AdminHome';
 import NotFound from './Pages/pageNotfound';
 import ParentHomePage from './Pages/parents/ParentHome';
+import SignUpSignInForm from './Components/login/login'
 
 
 function App() {
@@ -59,25 +60,43 @@ const studentlogin=localStorage.getItem("studentlogin")
 const adminlogin=localStorage.getItem("adminlogin")   
 const teacherlogin=localStorage.getItem("teacherlogin")   
 const parentlogin=localStorage.getItem("parentlogin")   
+// console.log('a'+adminlogin);
+// console.log('t'+teacherlogin);
+// console.log('s'+studentlogin);console.log('p'+parentlogin);
 
 
 
 
-  const renderRoutes = () => {
-    if (studentlogin === "true") {
-      return <Route path='/studenthome' element={<StudentHomePage />} />;
-    } 
-    if (teacherlogin === "true") {
-      return <Route path='/teacherhome' element={<TeachersHomePage />} />;
-    } 
+const renderRoutes = () => {
+  if (studentlogin === "true") {
+    return <Route path="/studenthome" element={<StudentHomePage />} />;
+  } else if (teacherlogin === "true") {
+    return <Route path="/teacherhome" element={<TeachersHomePage />} />;
+  } else if (adminlogin === "true") {
+    return <Route path="/adminhome" element={<AdminHomePage />} />;
+  } else if (parentlogin === "true") {
+    return <Route path="/home" element={<ParentHomePage />} />;
+  } else {
+    // If none of the above conditions are met, you can return a default route or handle the case where no user is logged in
+    return null;
+  }
+};
+
+  // const renderRoutes = () => {
+  //   if (studentlogin === "true") {
+  //     return <Route path='/studenthome' element={<StudentHomePage />} />;
+  //   } 
+  //   if (teacherlogin === "true") {
+  //     return <Route path='/teacherhome' element={<TeachersHomePage />} />;
+  //   } 
     
-     if (adminlogin === "true") {
-      return <Route path='/adminhome' element={<AdminHomePage />} />;
-    }
-     if (parentlogin === "true") {
-      return <Route path='/home' element={<ParentHomePage />} />;
-    } 
-  };
+  //    if (adminlogin === "true") {
+  //     return <Route path='/adminhome' element={<AdminHomePage />} />;
+  //   }
+  //    if (parentlogin === "true") {
+  //     return <Route path='/home' element={<ParentHomePage />} />;
+  //   } 
+  // };
   
 
 
@@ -93,6 +112,7 @@ const parentlogin=localStorage.getItem("parentlogin")
           <Route path="/student" element={<StudentAuthPage/>}/>
           <Route path="/teacher" element={<TeachersAuthPage/>}/>
           <Route path="/parent" element={<ParentAuthPage/>}/>
+          <Route path="/login" element={<SignUpSignInForm/>}/>
           <Route path="/admin" element={<AdminAuthPage/>}/>
           <Route path="*" element={<NotFound/>}/>
          

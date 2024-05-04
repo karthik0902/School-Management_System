@@ -24,7 +24,7 @@ ParentRouter.post('/signup', async (req, res) => {
     
     
         if(Teacher){
-            return res.status(404).send('Teacher registered already');
+            return res.status(404).send('Parent registered already');
         }
         else{
         try {

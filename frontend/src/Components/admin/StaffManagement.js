@@ -4,6 +4,8 @@ import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
 import TextField from '@mui/material/TextField';
 import EnhancedTable from './StaffList';
+import FormLabel from '@mui/material/FormLabel';
+
 
 
 
@@ -33,7 +35,7 @@ const StaffManagement = ({obj}) => {
   const addStaffMember = async () => {
     
     setNewStaffMember({ name: '', role: '' ,empid:''});
-    const logincode= localStorage.getItem('logincode')//AdminToken
+    const logincode= localStorage.getItem('logincode')
     const AdminToken= localStorage.getItem('AdminToken')//AdminToken
 
     try{
@@ -52,33 +54,32 @@ const StaffManagement = ({obj}) => {
 
   return (
     <div style={{marginTop:'40px'}}>
-    <div style={{margin:"20px",marginLeft:'2%',marginRight:'70%',backgroundColor:'lightblue',padding:'30px',borderRadius:'20px'}}>
-      <h2>Staff Management</h2>
-      <TextField id="standard-basic" style={{margin:"10px"}} label="Name:" variant="standard" type="text"
-          name="name"
-          value={newStaffMember.name}
-          onChange={handleInputChange} /><br/>
-      <TextField id="standard-basic" style={{margin:"10px"}} label="EMP ID:" variant="standard" type="text"
-          name="empid"
-          value={newStaffMember.empid}
-          onChange={handleInputChange} /><br/>
-      <TextField id="standard-basic" style={{margin:"10px"}} label="Role:" variant="standard"  type="text"
-          name="role"
-          value={newStaffMember.role}
-          onChange={handleInputChange}/><br/>
-   
-      <button style={{margin:"15px"}} onClick={addStaffMember}>Add Staff Member</button>
-      {res?<p  style={{ color: 'red',marginLeft:"55px" }}>{res}</p>:null}
+  <div style={{margin:"20px",marginLeft:'2%',marginRight:'70%',backgroundColor:'lightblue',padding:'30px',borderRadius:'20px'}}>
+  <FormLabel >Staff Management</FormLabel>
+    <TextField id="standard-basic" style={{margin:"10px"}} label="Name:" variant="standard" type="text"
+        name="name"
+        value={newStaffMember.name}
+        onChange={handleInputChange} /><br/>
+    <TextField id="standard-basic" style={{margin:"10px"}} label="EMP ID:" variant="standard" type="text"
+        name="empid"
+        value={newStaffMember.empid}
+        onChange={handleInputChange} /><br/>
+    <TextField id="standard-basic" style={{margin:"10px"}} label="Role:" variant="standard"  type="text"
+        name="role"
+        value={newStaffMember.role}
+        onChange={handleInputChange}/><br/>
+ 
+    <button style={{margin:"15px"}} onClick={addStaffMember}>Add Staff Member</button>
+    {res?<p  style={{ color: 'red',marginLeft:"55px" }}>{res}</p>:null}
 
-      {error?<p>{error}</p>:null}
-      </div>
-      <h4>STAFF LIST</h4>
-      <div style={{display:'flex',backgroundColor:'lightblue',borderRadius:'15px',flexWrap:'wrap'}}>
-        <EnhancedTable obj={obj}/>
-     
-      
-      </div>
-    </div>
+    {error?<p>{error}</p>:null}
+  </div>
+  <FormLabel >STAFF LIST</FormLabel>
+
+
+    <EnhancedTable obj={obj}/>
+</div>
+
   );
 };
 

@@ -11,7 +11,7 @@ const studentImageSrc4 = require('../asserts/teacher.png');
 const ChooseLoginTypePage = () => {
     const nav = useNavigate();
     return (
-        <div className="choose-login-type-page">
+        <div className="choose-login-type-page" >
             <h1>Choose Your Login</h1>
             <div className="login-options" style={{display:'flex'}}>
                 <button onClick={()=>{nav("/student")}} className="login-button student" >

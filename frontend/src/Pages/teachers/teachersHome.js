@@ -12,7 +12,7 @@ import TeacherAppbar from './teacherAppBar';
 const TeachersHomePage = () => {
 
     return (
-        <div className="teacher-home-page">
+        <div className="teacher-home-page" style={{overflowX:'auto'}}>
             <TeacherAppbar/>
            
                    

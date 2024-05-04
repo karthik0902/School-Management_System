@@ -56,8 +56,8 @@ export default function ClippedDrawer({data}) {
       <CssBaseline />
       <AppBar   sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-            <img src={img} style={{width:'40px',marginLeft:'5px'}}/>
-          <Typography style={{marginLeft:'20px'}} variant="h6" noWrap component="div">
+            <img src={img} style={{width:'40px',marginLeft:'5px'}} alt='img'/>
+          <Typography style={{marginLeft:'20px'}}  >
           Admin Page        </Typography>
           <Box sx={{ flexGrow: 1 }} /> {/* Add a flex-grow box to push the Button to the right */}
       <Button color="inherit" onClick={logout}>Logout</Button>

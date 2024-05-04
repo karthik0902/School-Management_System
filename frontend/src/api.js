@@ -103,6 +103,60 @@ export const teacherLogin = async (data) => {
     }
   };
 
+  export const AdminStudentDelete = async (code,id,token) => {
+    try {
+      const response = await axios.delete(`${baseURL}/AdminUsers/student/${code}/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  export const AdminstaffDelete = async (code,id,token) => {
+    try {
+      const response = await axios.delete(`${baseURL}/AdminUsers/staff/${code}/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+
+  export const AdminStudentEdit = async (code,id,token,data) => {
+    try {
+      const response = await axios.put(`${baseURL}/AdminUsers/students/${code}/${id}`,data,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const AdminStaffEdit = async (code,id,token,data) => {
+    try {
+      const response = await axios.put(`${baseURL}/AdminUsers/staff/${code}/${id}`,data,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
   export const teacherSchedulePost = async (code,data,token) => {
     try {
       const response = await axios.post(`${baseURL}/TeacherUsers/Schedule/${code}`,data ,{

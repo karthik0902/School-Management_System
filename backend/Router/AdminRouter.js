@@ -54,7 +54,9 @@ AdminRouter.post('/signup', async (req, res) => {
             res.status(500).json({ error: 'Internal server error' }); } 
     });
 
-    AdminRouter.use(loggingMiddleware)
+
+
+    // AdminRouter.use(loggingMiddleware)
 
 
 
@@ -89,7 +91,7 @@ AdminRouter.post('/signup', async (req, res) => {
         if (adminUser) {
             adminUser.students.push({ studentId, fee, payment });
             await adminUser.save();
-            res.status(200).send("Sucess");
+            res.status(200).send("Success");
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -100,6 +102,123 @@ AdminRouter.post('/signup', async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
+
+
+    AdminRouter.put("/students/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+          const { fee, payment ,studentId} = req.body;
+      
+          const adminUser = await AdminModel.findOne({ School_code: code });
+          if (adminUser) {
+
+            const studentdata = adminUser.students.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+            if (studentdata >=0) {
+                adminUser.students[studentdata].studentId = studentId ||adminUser.students[studentdata].studentId;
+              adminUser.students[studentdata].fee = fee ||adminUser.students[studentdata].fee;
+              adminUser.students[studentdata].payment = payment||adminUser.students[studentdata].payment;
+           
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error updating student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+      AdminRouter.delete("/student/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+      
+          const adminUser = await AdminModel.findOne({ School_code: code });
+          if (adminUser) {
+            const studentIndex = adminUser.students.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+      
+            if (studentIndex >= 0) {
+              adminUser.students.splice(studentIndex, 1); 
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+
+      AdminRouter.delete("/staff/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+      
+          const adminUser = await AdminModel.findOne({ School_code: code });
+          if (adminUser) {
+            const studentIndex = adminUser.teachers.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+       
+      
+            if (studentIndex >= 0) {
+              adminUser.teachers.splice(studentIndex, 1); 
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+      AdminRouter.put("/staff/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+          const { name, empid ,role} = req.body;
+      
+          const adminUser = await AdminModel.findOne({ School_code: code });
+          if (adminUser) {
+
+            const studentdata = adminUser.teachers.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+            if (studentdata >=0) {
+                adminUser.teachers[studentdata].role = role ||adminUser.teachers[studentdata].role;
+              adminUser.teachers[studentdata].name = name ||adminUser.teachers[studentdata].name;
+              adminUser.teachers[studentdata].empid = empid||adminUser.teachers[studentdata].empid;
+           
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error updating student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
 
 
     AdminRouter.get("/alldata/:code",async (req,res)=>{
@@ -121,8 +240,13 @@ AdminRouter.post('/signup', async (req, res) => {
             const amount = await AdminModel.find();
             const scheduleList = amount.map(teacher => teacher.students);
             const flatData = scheduleList.flat();
-            const totalAmount = flatData.reduce((total, current) => total + current.fee, 0);
-            res.json(totalAmount);
+            let totalFeeSuccess = 0;
+            flatData.forEach(item => {
+              if (item.payment === 'Success') {
+                totalFeeSuccess += item.fee;
+              }
+            });
+            res.json(totalFeeSuccess);
             }
             catch (error) {
                 console.error('Error fetching students:', error);
@@ -145,7 +269,7 @@ AdminRouter.post('/signup', async (req, res) => {
             const decodedToken = jwt.verify(token, secretKey);
             
             if(decodedToken){
-                console.log('Authentication Sucess!'); 
+                console.log('Admin Authentication Sucess!'); 
 
                 next(); 
 
@@ -160,8 +284,6 @@ AdminRouter.post('/signup', async (req, res) => {
             
         }
     }
-
-
 
 
 

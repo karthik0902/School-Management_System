@@ -4,39 +4,42 @@ import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
 import TextField from '@mui/material/TextField';
 import BasicTable from './StudentList';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 
 // Fee management component
 const FeeManagement = ({obj}) => {
   const { code,setCode,Admintoken} = useContext(UserContext);
   const [error,seterror]=useState(null)
+
+  const [studentId, setstudentId] = useState('');
+  const [fee, setfee] = useState('');
+  const [payment, setpayment] = useState('');
+
+
   const [res,setres]=useState(null)
 
 
-  const [fees, setFees] = useState([]);
-  const [newFee, setNewFee] = useState({
-    studentId: '',
-    fee: '',
-    payment:'',
-  });
+  
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewFee({
-      ...newFee,
-      [name]: value
-    });
-  };
+  
 
   const addFee = async () => {
-    setFees([...fees, newFee]);
-    setNewFee({ studentId: '', fee: '' ,payment:''});
+   
     const logincode = localStorage.getItem('logincode')//AdminToken
     const AdminToken = localStorage.getItem('AdminToken')//AdminToken
 
     
     try{
-    const response= await AdminStudentPost(logincode,newFee,AdminToken)
+    const response= await AdminStudentPost(logincode,{
+      studentId:studentId,
+      fee:fee,
+      payment:payment,
+    },AdminToken)
     setres(response)
     console.log(response);
     }catch(err){
@@ -44,6 +47,11 @@ const FeeManagement = ({obj}) => {
       console.log(err);
     }
   };
+  const handlePaymentStatusChange = (event) => {
+    setpayment(event.target.value);
+  };
+
+  console.log(payment);
 
 
 
@@ -53,16 +61,28 @@ const FeeManagement = ({obj}) => {
       <h2>Add Student</h2>
       <TextField id="standard-basic" style={{margin:"10px"}}label="Student Id:" variant="standard" type="text"
           name="studentId"
-          value={newFee.studentId}
-          onChange={handleInputChange}/><br/>
+          value={studentId}
+          onChange={(e)=>{setstudentId(e.target.value)}}/><br/>
       <TextField id="standard-basic" style={{margin:"10px"}} label="Amount:" variant="standard" type="number"
           name="fee"
-          value={newFee.fee}
-          onChange={handleInputChange} /><br/>
-      <TextField id="standard-basic"style={{margin:"10px"}} label="Payment status:" variant="standard" type="text"
-          name="payment"
-          value={newFee.payment}
-          onChange={handleInputChange}/><br/>
+          value={fee}
+          onChange={(e)=>{setfee(e.target.value)}} /><br/>
+      
+
+<FormControl style={{margin:"10px"}} >
+      <FormLabel id="demo-row-radio-buttons-group-label">Payment status:</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={payment}
+        onChange={handlePaymentStatusChange}
+      >
+        <FormControlLabel value="Success" control={<Radio />} label="Success" />
+        <FormControlLabel value="Failed" control={<Radio />} label="Failed" />
+       
+      </RadioGroup>
+    </FormControl>
 
       
       
@@ -77,11 +97,7 @@ const FeeManagement = ({obj}) => {
 
 
 
-      <div style={{display:'flex',backgroundColor:'lightblue',borderRadius:'15px',flexWrap:'wrap'}}>
-        
-      
-      
-      </div>
+    
      
     </div>
   );
