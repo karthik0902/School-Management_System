@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {teacherSchedulePost} from "../../api"
 import UserContext from '../../Components/UserContext/UserContext';
 import { useContext } from 'react';
-import {TeacherScheduleDelete,AdminStudentEdit} from "../../api"
+import {TeacherScheduleDelete,TeacherScheduleEdit} from "../../api"
 
 import TextField from '@mui/material/TextField';
 import Table from '@mui/material/Table';
@@ -55,7 +55,7 @@ const Schedule = ({obj}) => {
   };
   async function edit(){
     try{
-      const response= await AdminStudentEdit(empid,id,teacherToken,{sub:sub,time:time1})
+      const response= await TeacherScheduleEdit(empid,id,teacherToken,{sub:sub,time:time1})
       console.log(response);
    }
    catch(err){

@@ -182,6 +182,20 @@ export const teacherLogin = async (data) => {
     }
   };
 
+
+  export const TeacherScheduleEdit = async (code,id,token,data) => {
+    try {
+      const response = await axios.put(`${baseURL}/TeacherUsers/Schedule/${code}/${id}`,data,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   export const teacherSyllabusPost = async (code,data,token) => {
     try {
       const response = await axios.post(`${baseURL}/TeacherUsers/Syllabus/${code}`,data,{

@@ -152,6 +152,39 @@ else{
       });
 
 
+
+
+      TeacherRouter.put("/Schedule/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+          const { time ,sub} = req.body;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+
+            const studentdata = adminUser.Schedule.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+            if (studentdata >=0) {
+                adminUser.Schedule[studentdata].sub = sub ||adminUser.Schedule[studentdata].sub;
+              adminUser.Schedule[studentdata].time = time ||adminUser.Schedule[studentdata].time;
+           
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error updating student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+
     TeacherRouter.post("/Syllabus/:empid",async (req,res)=>{
         try{
         let empid = req.params.empid;
