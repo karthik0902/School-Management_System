@@ -21,9 +21,9 @@ const NotFound = () => {
   return (
     <div>
       <h1>404 - Page Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
+      <p style={{color:'red'}}>The page you are attempting to access does not exist. Please ensure that you properly log out of any other pages before proceeding.</p>
      
-      <button onClick={logout}>Back</button>
+      <button onClick={logout}>logout</button>
 
     </div>
   );

@@ -169,6 +169,18 @@ export const teacherLogin = async (data) => {
       throw error;
     }
   };
+  export const TeacherScheduleDelete = async (code,id,token) => {
+    try {
+      const response = await axios.delete(`${baseURL}/TeacherUsers/Schedule/${code}/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   export const teacherSyllabusPost = async (code,data,token) => {
     try {

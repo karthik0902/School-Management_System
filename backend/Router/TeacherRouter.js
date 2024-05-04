@@ -123,6 +123,34 @@ else{
         }
     });
 
+    TeacherRouter.delete("/Schedule/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+            const studentIndex = adminUser.Schedule.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+       
+      
+            if (studentIndex >= 0) {
+              adminUser.Schedule.splice(studentIndex, 1); 
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
 
     TeacherRouter.post("/Syllabus/:empid",async (req,res)=>{
         try{

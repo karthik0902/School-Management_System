@@ -14,7 +14,6 @@ import AdminAuthPage from './Pages/Admin/AdminLogin';
 import AdminHomePage from './Pages/Admin/AdminHome';
 import NotFound from './Pages/pageNotfound';
 import ParentHomePage from './Pages/parents/ParentHome';
-import SignUpSignInForm from './Components/login/login'
 
 
 function App() {
@@ -112,7 +111,6 @@ const renderRoutes = () => {
           <Route path="/student" element={<StudentAuthPage/>}/>
           <Route path="/teacher" element={<TeachersAuthPage/>}/>
           <Route path="/parent" element={<ParentAuthPage/>}/>
-          <Route path="/login" element={<SignUpSignInForm/>}/>
           <Route path="/admin" element={<AdminAuthPage/>}/>
           <Route path="*" element={<NotFound/>}/>
          

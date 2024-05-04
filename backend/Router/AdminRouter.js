@@ -56,7 +56,7 @@ AdminRouter.post('/signup', async (req, res) => {
 
 
 
-    // AdminRouter.use(loggingMiddleware)
+    AdminRouter.use(loggingMiddleware)
 
 
 
@@ -150,7 +150,7 @@ AdminRouter.post('/signup', async (req, res) => {
               await adminUser.save();
               res.status(200).send("Success");
             } else {
-              res.status(404).json({ error: "Student not found" });
+              res.json({ error: "Student not found" });
             }
           } else {
             res.status(404).json({ error: "User not found" });
@@ -179,7 +179,7 @@ AdminRouter.post('/signup', async (req, res) => {
               await adminUser.save();
               res.status(200).send("Success");
             } else {
-              res.status(404).json({ error: "Student not found" });
+              res.json({ error: "Student not found" });
             }
           } else {
             res.status(404).json({ error: "User not found" });
