@@ -207,6 +207,126 @@ else{
     });
 
 
+    TeacherRouter.put("/Syllabus/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+          const { Syllabus ,sub} = req.body;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+
+            const studentdata = adminUser.Syllabus.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+            if (studentdata >=0) {
+                adminUser.Syllabus[studentdata].sub = sub ||adminUser.Syllabus[studentdata].sub;
+              adminUser.Syllabus[studentdata].Syllabus = Syllabus ||adminUser.Syllabus[studentdata].Syllabus;
+           
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error updating student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+      TeacherRouter.delete("/Syllabus/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+            const studentIndex = adminUser.Syllabus.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+       
+      
+            if (studentIndex >= 0) {
+              adminUser.Syllabus.splice(studentIndex, 1); 
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+      TeacherRouter.put("/Performance/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+          const { sub , studentId,grade, attendence } = req.body;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+
+            const studentdata = adminUser.student.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+            if (studentdata >=0) {
+                adminUser.student[studentdata].sub = sub ||adminUser.student[studentdata].sub;
+              adminUser.student[studentdata].studentId = studentId ||adminUser.student[studentdata].studentId;
+              adminUser.student[studentdata].grade = grade ||adminUser.student[studentdata].grade;
+              adminUser.student[studentdata].attendence = attendence ||adminUser.student[studentdata].attendence;
+
+           
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.status(404).json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error updating student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+      TeacherRouter.delete("/Performance/:code/:Id", async (req, res) => {
+        try {
+          let code = req.params.code;
+          let Id = req.params.Id;
+      
+          const adminUser = await TeacherModel.findOne({ empid: code });
+          if (adminUser) {
+            const studentIndex = adminUser.student.findIndex(
+              (doc) => doc._id.equals(Id)
+            );
+       
+      
+            if (studentIndex >= 0) {
+              adminUser.student.splice(studentIndex, 1); 
+              await adminUser.save();
+              res.status(200).send("Success");
+            } else {
+              res.json({ error: "Student not found" });
+            }
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+
 
     TeacherRouter.post("/Performance/:empid",async (req,res)=>{
         try{
