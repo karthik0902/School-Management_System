@@ -4,23 +4,18 @@ School_code:123456
 
 /////////////////////////////////
 admin :
-email: Viit@gmail.com
-password: karthik
+email: admin
+password: admin
 
 //////////////////////////////////
 teacher :
 emp ID: teacher1
-password: karthik
+password: teacher
 
 //////////////////////////////////
 student :
-Student id: 19l31a05h1
-password: karthik
-
-//////////////////////////////////
-admin :
-email: karthik
-password: karthik
+Student id: student1
+password: student
 
 //////////////////////////////////
 
