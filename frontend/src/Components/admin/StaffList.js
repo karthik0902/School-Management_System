@@ -49,6 +49,7 @@ export default function BasicTable({obj}) {
     try{
       const response= await AdminStaffEdit(logincode,id,AdminToken,{name:studentId,empid:fee,role:role})
       console.log(response);
+      handleClose()
    }
    catch(err){
      console.log(err);

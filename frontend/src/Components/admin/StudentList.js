@@ -48,6 +48,7 @@ export default function BasicTable({ obj }) {
     try{
       const response= await AdminStudentEdit(logincode,id,AdminToken,{studentId:studentId,fee:fee,payment:payment})
       console.log(response);
+      handleClose()
    }
    catch(err){
      console.log(err);

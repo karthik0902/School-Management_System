@@ -51,6 +51,7 @@ const Syllabus = ({obj}) => {
     try{
       const response= await TeacherSyllabusEdit(empid,id,teacherToken,{sub:sub,Syllabus:Syllabus1})
       console.log(response);
+      handleClose()
    }
    catch(err){
      console.log(err);

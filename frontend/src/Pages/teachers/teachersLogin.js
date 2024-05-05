@@ -1,7 +1,6 @@
 
 
 import React, { useState } from 'react';
-import './teachersLoginPage.css';
 import {teacherLogin,teacherSignup} from "../../api"
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../Components/UserContext/UserContext';

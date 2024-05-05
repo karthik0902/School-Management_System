@@ -57,6 +57,7 @@ const Schedule = ({obj}) => {
     try{
       const response= await TeacherScheduleEdit(empid,id,teacherToken,{sub:sub,time:time1})
       console.log(response);
+      handleClose()
    }
    catch(err){
      console.log(err);
