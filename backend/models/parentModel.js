@@ -7,5 +7,5 @@ const userSchema =new mongoose.Schema({
    
    
  });
- const ParentModel =mongoose.model("PatentsUsers",userSchema)
+ const ParentModel =mongoose.model("ParentUsers",userSchema)
  module.exports = ParentModel

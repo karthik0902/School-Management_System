@@ -45,6 +45,7 @@ const Gradebook = ({obj}) => {
     try{
       const response= await TeacherStudentEdit(empid,id,teacherToken,{sub:sub,attendence:attendence,studentId:studentid,grade:grade})
       console.log(response);
+      handleClose()
    }
    catch(err){
      console.log(err);
