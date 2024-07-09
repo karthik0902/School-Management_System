@@ -1,4 +1,4 @@
-/* choose.css */
+
 .choose-login-type-page {
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@ h1 {
     background-color: lightblue;
 }
 
-.img {
+.choose-img {
     width: 40px;
     height: 40px;
     margin-right: 10px;
