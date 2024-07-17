@@ -1,0 +1,14 @@
+/*  Fee management component */
+
+.add-container{
+    margin:60px;
+    margin-left:2%;
+    margin-right:70%;
+    background-color:rgb(215, 250, 225);
+    padding:25px;
+    border-radius:20px;
+
+}
+.TextField{
+    margin: 10%;
+}
