@@ -9,9 +9,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import './styles.css'; 
 
 
-// Fee management component
+
 const FeeManagement = ({obj}) => {
   const { code,setCode,Admintoken} = useContext(UserContext);
   const [error,seterror]=useState(null)
@@ -56,8 +57,8 @@ const FeeManagement = ({obj}) => {
 
 
   return (
-    <div style={{marginTop:'30px'}}>
-    <div style={{margin:"20px",marginLeft:'2%',marginRight:'70%',backgroundColor:'lightblue',padding:'25px',borderRadius:'20px'}}>
+    <div  style={{marginTop:'30px'}}>
+    <div className='add-container' >
       <h2>Add Student</h2>
       <TextField id="standard-basic" style={{margin:"10px"}}label="Student Id:" variant="standard" type="text"
           name="studentId"
