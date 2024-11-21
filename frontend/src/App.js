@@ -1,4 +1,3 @@
-import "./App.css";
 import {  useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
@@ -14,7 +13,7 @@ import AdminAuthPage from './Pages/Admin/AdminLogin';
 import AdminHomePage from './Pages/Admin/AdminHome';
 import NotFound from './Pages/pageNotfound';
 import ParentHomePage from './Pages/parents/ParentHome';
-
+import "./App.css";
 
 function App() {
   let [code,setCode]=useState()

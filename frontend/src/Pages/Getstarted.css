@@ -1,32 +1,129 @@
-
-
-.get-started-page {
-
-    margin: 0 auto;
-    color: rgb(35, 165, 208);
-    
-    text-align: center;
+.homepage h1{
+    color: aliceblue;
+    font-style: normal;
+    margin-left: 300px;
+    margin-top: 200px;
+font-weight: 400;
+font-size: 50px;
+line-height: 63px;
 }
 
-
-.Heading-button {
-    margin-top: 20px;
-    margin-left: 35%;
-    display: flex;
-}
-#heading-btn{
-    margin-left:17%; 
-    color:rgb(35, 165, 208) ;
-    margin-bottom: 20px;
-
-     height:"50px"
-
-}
-.img1{
+.homepage{
+    background: linear-gradient(0.4deg, #120B1E 0.85%, #350A7D 98%);
+    height: 100%;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
     width: 100%;
-    
+
+}
+.parent-container {
+    position: absolute; /* To position child elements absolutely */
+    width: 100%; /* Set the desired width */
+    height: 100%; /* Set the desired height (e.g., full viewport) */
+    overflow: hidden; /* Hides any content outside this container */
+    top: 0;
+    opacity: 0.4;
 }
 
+.circle {
+    background: transparent;
+    width: 1300px;
+    height: 1300px;
+    z-index: -4;
+    border-radius: 60%;
+    position: absolute;
+  
+    left: 50%; /* Center horizontally */
+    top: 70%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Adjust for true centering */
+    background: conic-gradient(from 226.53deg at 54.67% 46.42%, rgba(255, 255, 255, 0) -91.73deg, rgba(204, 204, 204, 0) 30.18deg, #999999 86.54deg, rgba(204, 204, 204, 0.55) 192.69deg, rgba(255, 255, 255, 0) 268.27deg, rgba(204, 204, 204, 0) 390.18deg);
+    mask-image: radial-gradient(circle, transparent 80%, black 62%);
+    -webkit-mask-image: radial-gradient(circle, transparent 70.5%, black 0%);
+}
+/* Rectangle 251 */
 
 
+
+.parent-container-1 {
+    position: absolute; /* To position child elements absolutely */
+    width: 100%; /* Set the desired width */
+    height: 100%; /* Set the desired height (e.g., full viewport) */
+    overflow: hidden; /* Hides any content outside this container */
+    top: 0;
+    opacity: 0.4;
+}
+
+.circle-1 {
+    background: transparent;
+    width: 900px;
+    height: 900px;
+    z-index: -4;
+    border-radius: 60%;
+    position: absolute;
+ 
+    left: 50%; /* Center horizontally */
+    top: 70%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Adjust for true centering */
+    background: conic-gradient(from 180deg at 50% 50%, rgba(152, 152, 152, 0) -33.94deg, rgba(151, 151, 151, 0) 100.87deg, rgba(152, 152, 152, 0.1) 108deg, rgba(152, 152, 152, 0.6) 184.4deg, #999999 250.84deg, rgba(255, 255, 255, 0) 290.95deg, rgba(152, 152, 152, 0) 326.06deg, rgba(151, 151, 151, 0) 460.87deg);
+    mask-image: radial-gradient(circle, transparent 80%, black 62%);
+    -webkit-mask-image: radial-gradient(circle, transparent 70.3%, black 0%);
+}
+
+.parent-container-2 {
+    position: absolute; /* To position child elements absolutely */
+    width: 100%; /* Set the desired width */
+    height: 100%; /* Set the desired height (e.g., full viewport) */
+    overflow: hidden; /* Hides any content outside this container */
+    top: 0;
+    opacity: 0.4;
+}
+
+.circle-2 {
+    width: 600px;
+    height: 600px;
+
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 70%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Adjust for true centering */
+    border-radius: 50%; /* Makes it circular */
+    background: conic-gradient(from 180deg at 50% 50%, rgba(166, 166, 166, 0) -62.3deg, rgba(204, 204, 204, 0) 33.05deg, rgba(255, 255, 255, 0) 65.72deg, #CCCCCC 106.46deg, rgba(153, 153, 153, 0) 150.93deg, rgba(204, 204, 204, 0) 208.61deg, rgba(179, 179, 179, 0.6) 256.46deg, rgba(166, 166, 166, 0) 297.7deg, rgba(204, 204, 204, 0) 393.05deg);
+
+    mask-image: radial-gradient(circle, transparent 60%, black 62%);
+    -webkit-mask-image: radial-gradient(circle, transparent 70.3%, black 0%);
+    z-index: 0;
+  }
+  
+/* Rectangle 251 */
+
+.black-backgrond{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    z-index: -5;
+}
+.getstarted-btn{
+    width: 220px;
+    height: 70px;
+    margin-left: 600px;
+    margin-top: 3%;
+    color: azure;
+    background: rgba(2, 0, 103, 0.08);
+    border: 2.5px solid #DCDCDC;
+    box-shadow: 1px 1px 30px 1px #5300EC, inset 2px 2px 28.1px -9px #000000;
+    backdrop-filter: blur(8.2px);
+    border-radius: 50px;
+    font-size: 35px;
+    cursor: pointer;
+
+}
+
+.getstarted-btn:hover {
+    background-color: rgba(112, 1, 12, 0.399);
+    box-shadow: 1px 1px 30px 1px #ec003fb3, inset 2px 2px 28.1px -9px #000000;
+}
+/* Rectangle 250 */
 
